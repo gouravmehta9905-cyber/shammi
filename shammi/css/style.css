@@ -1267,18 +1267,25 @@ main {
 
 .polaroid__photo {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  background: #f0e6e8;
-  border-radius: 2px;
+  aspect-ratio: 4 / 5;
+  background: #20102b;
+  border-radius: 3px;
   overflow: hidden;
   position: relative;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.25);
 }
 
 .polaroid__photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
   display: block;
+  transition: transform 0.4s var(--ease);
+}
+
+.polaroid:hover .polaroid__photo img {
+  transform: scale(1.04);
 }
 
 /* Curated Aesthetic Placeholders when img is null */
@@ -1710,27 +1717,38 @@ main {
 }
 
 .lightbox__frame {
-  max-width: 500px;
+  max-width: min(480px, 92vw);
+  max-height: 85vh;
   width: 100%;
   background: #fff;
-  padding: 18px 18px 24px;
+  padding: 16px 16px 20px;
   border-radius: 8px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .lightbox__img {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  max-height: 65vh;
   border-radius: 4px;
   overflow: hidden;
-  background: #111;
+  background: #150b21;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lightbox__img img {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  max-height: 65vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
+  display: block;
+  border-radius: 4px;
 }
 
 .lightbox__caption {

@@ -90,32 +90,32 @@ const SITE_DATA = {
   // Or leave null to display aesthetic curated romantic cards.
   gallery: [
     {
-      img: null,
+      img: "assets/photos/1.jpeg",
       theme: "sunset",
       caption: "That unforgettable smile that lights up my whole world ✨",
     },
     {
-      img: null,
+      img: "assets/photos/2.jpeg",
       theme: "rose",
       caption: "Our favorite little moments together 🌸",
     },
     {
-      img: null,
+      img: "assets/photos/3.jpeg",
       theme: "starlight",
       caption: "Under the stars, thinking of you 🌙",
     },
     {
-      img: null,
+      img: "assets/photos/4.jpeg",
       theme: "blush",
       caption: "Your infectious laugh that makes everything better 🥰",
     },
     {
-      img: null,
+      img: "assets/photos/5.jpeg",
       theme: "gold",
       caption: "Every memory with you is pure gold 💫",
     },
     {
-      img: null,
+      img: "assets/photos/6.jpeg",
       theme: "midnight",
       caption: "Here's to making countless more memories, Cutei 💖",
     },
