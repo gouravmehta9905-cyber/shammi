@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Happy Birthday Shammi ✨ | A Special Surprise</title>
+  <meta name="description" content="A magical interactive birthday celebration made with love for Shammi (Madam Ji)." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,600&family=Caveat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Background Canvas for Dreamy Stars & Ambient Sparkles -->
+  <canvas id="sky" aria-hidden="true"></canvas>
+
+  <!-- Celebration Confetti & Fireworks Canvas -->
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+  <!-- ===================== FLOATING AUDIO CONTROLS ===================== -->
+  <div class="audio-controls" id="audioControls">
+    <!-- Music Player -->
+    <div class="musicplayer" id="musicPlayer">
+      <button id="musicToggle" class="musicplayer__disc" aria-label="Play birthday music">
+        <span class="musicplayer__icon">♪</span>
+      </button>
+      <div class="musicplayer__info">
+        <span class="musicplayer__label" id="musicLabel">birthday melody</span>
+        <div class="musicplayer__waves">
+          <span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+      <audio id="audioEl" preload="none" loop></audio>
+    </div>
+
+    <!-- Sound Effects Toggle Button -->
+    <button id="sfxToggle" class="sfx-btn" aria-label="Toggle sound effects" title="Sound Effects On">
+      <span class="sfx-icon">🔔</span>
+    </button>
+  </div>
+
+  <!-- ===================== SIDE NAVIGATION DOTS ===================== -->
+  <nav class="dotnav" id="dotnav" aria-label="Section navigation">
+    <button class="dotnav__dot" data-target="hero" aria-label="Hero section"></button>
+    <button class="dotnav__dot" data-target="cakeSection" aria-label="Birthday cake"></button>
+    <button class="dotnav__dot" data-target="letterSection" aria-label="Birthday letter"></button>
+    <button class="dotnav__dot" data-target="story" aria-label="Our story"></button>
+    <button class="dotnav__dot" data-target="gallery" aria-label="Memory gallery"></button>
+    <button class="dotnav__dot" data-target="notes" aria-label="Love notes"></button>
+    <button class="dotnav__dot" data-target="reasons" aria-label="Pop the reasons"></button>
+    <button class="dotnav__dot" data-target="lovemeter" aria-label="Love meter"></button>
+    <button class="dotnav__dot" data-target="finale" aria-label="Finale"></button>
+  </nav>
+
+  <!-- ===================== LANDING SCREEN (MODAL SURPRISE) ===================== -->
+  <section id="landing" class="landing">
+    <div class="landing__backdrop"></div>
+    <div class="landing__stars" aria-hidden="true"></div>
+    <div class="landing__card">
+      <div class="landing__badge" data-landing-badge>✦ A Special Surprise ✦</div>
+      <div class="landing__gift-icon">🎁</div>
+      <h1 class="landing__title" data-landing-title>Hey, Madam Ji ✨</h1>
+      <p class="landing__subtitle" data-landing-subtitle>I made you a little magical corner of the internet for your birthday.</p>
+      
+      <button id="openSurprise" class="btn btn--primary landing__btn">
+        <span data-landing-btn>Open Your Surprise 🎁</span>
+        <span class="btn__sparkle">✨</span>
+      </button>
+
+      <div class="landing__audio-hint">Turn on your volume for the best experience 🔊</div>
+    </div>
+  </section>
+
+  <!-- ===================== MAIN EXPERIENCE ===================== -->
+  <main id="main">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero section">
+      <div class="hero__inner" data-reveal>
+        <p class="eyebrow" data-hero-eyebrow>for my Cutei 💖</p>
+        <h2 class="hero__title">
+          <span data-hero-line1 class="hero__line1">Happy Birthday, Shammi!</span>
+          <span class="hero__title-script" data-hero-line2>This celebration is all for you.</span>
+        </h2>
+        <p class="hero__subtitle" data-hero-subtitle>
+          Every section holds a little piece of love and magic I wanted you to see. Take your time, Madam Ji — walk through your special day.
+        </p>
+        <div class="hero__scrollhint" aria-hidden="true">
+          <div class="mouse-icon"><div class="mouse-wheel"></div></div>
+          <span>scroll to explore</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== INTERACTIVE BIRTHDAY CAKE ===================== -->
+    <section id="cakeSection" class="cake-section section">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow" data-cake-badge>make a wish</p>
+        <h2 class="section__title" data-cake-title>Blow the Candles, Madam Ji 🎂</h2>
+        <p class="section__desc" data-cake-subtitle>Close your eyes, make the biggest wish of your heart, and blow out the candles!</p>
+      </header>
+
+      <div class="cake-stage" data-reveal>
+        <!-- The 3D Cake Artwork -->
+        <div class="cake-container" id="cakeContainer">
+          <!-- Sparkles around cake -->
+          <div class="cake-sparkles" aria-hidden="true">
+            <span class="sparkle s1">✨</span>
+            <span class="sparkle s2">⭐</span>
+            <span class="sparkle s3">✨</span>
+            <span class="sparkle s4">💖</span>
+          </div>
+
+          <!-- Cake Plate -->
+          <div class="cake-plate"></div>
+
+          <!-- Cake Structure -->
+          <div class="cake-body" id="cakeBody">
+            <!-- Candles Row -->
+            <div class="candles-rack" id="candlesRack">
+              <!-- Candles injected dynamically by JS -->
+            </div>
+
+            <!-- Top Layer -->
+            <div class="cake-layer cake-layer--top">
+              <div class="cake-layer__frosting"></div>
+              <div class="cake-topper">
+                <span class="topper-text" id="cakeTopperText">Happy Birthday Shammi ✨</span>
+              </div>
+            </div>
+
+            <!-- Middle Layer -->
+            <div class="cake-layer cake-layer--mid">
+              <div class="cake-layer__frosting"></div>
+              <div class="cake-sprinkles"></div>
+            </div>
+
+            <!-- Bottom Layer -->
+            <div class="cake-layer cake-layer--bottom">
+              <div class="cake-layer__frosting"></div>
+              <div class="cake-berries">
+                <span>🍓</span><span>🫐</span><span>🍓</span><span>🫐</span><span>🍓</span>
+              </div>
+            </div>
+
+            <!-- Cake Slice Cut Effect (hidden until cut) -->
+            <div class="cake-slice-cut" id="cakeSliceCut">
+              <span class="slice-emoji">🍰</span>
+              <span class="slice-tag">Yum! Made with love ❤️</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cake Controls -->
+        <div class="cake-actions" id="cakeActions">
+          <button id="blowCandlesBtn" class="btn btn--cake">
+            <span class="btn__icon">🌬️</span>
+            <span class="btn__text" id="blowBtnText">Blow Out the Candles</span>
+          </button>
+          <button id="cutCakeBtn" class="btn btn--cake btn--secondary" style="display: none;">
+            <span class="btn__icon">🍰</span>
+            <span class="btn__text" id="cutBtnText">Cut the Cake</span>
+          </button>
+        </div>
+
+        <!-- Wish Granted Card -->
+        <div class="wish-card" id="wishCard" style="display: none;">
+          <div class="wish-card__glow"></div>
+          <h3 class="wish-card__title" id="wishCardTitle">✨ Wish Granted! ✨</h3>
+          <p class="wish-card__text" id="wishCardText">May all your days be as bright, beautiful, and sweet as you make mine.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WAX-SEALED BIRTHDAY LETTER ===================== -->
+    <section id="letterSection" class="letter-section section">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow" data-letter-badge>sealed with love</p>
+        <h2 class="section__title" data-letter-title>A Letter from My Heart</h2>
+        <p class="section__desc" data-letter-subtitle>Tap the wax seal to open your birthday letter 💌</p>
+      </header>
+
+      <div class="envelope-stage" data-reveal>
+        <div class="envelope-wrapper" id="envelopeWrapper">
+          <!-- Envelope Back -->
+          <div class="envelope">
+            <div class="envelope__back"></div>
+            
+            <!-- The Letter Sheet (Slides Up) -->
+            <div class="letter-sheet" id="letterSheet">
+              <div class="letter-sheet__inner">
+                <div class="letter-stamp">✦ Shammi ✦</div>
+                <h3 class="letter-salutation" id="letterSalutation">My Dearest Madam Ji,</h3>
+                <div class="letter-body" id="letterBody">
+                  <!-- Injected from data.js -->
+                </div>
+                <div class="letter-signature">
+                  <p class="letter-closing" id="letterClosing">Forever yours,</p>
+                  <p class="letter-author" id="letterAuthor">With all my heart ❤️</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Envelope Front Flaps -->
+            <div class="envelope__pocket"></div>
+            <div class="envelope__flap" id="envelopeFlap"></div>
+
+            <!-- Wax Seal Button -->
+            <button class="wax-seal" id="waxSealBtn" aria-label="Open envelope">
+              <span class="wax-seal__heart">❤</span>
+              <span class="wax-seal__text">OPEN</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== OUR STORY ===================== -->
+    <section id="story" class="story section">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">our story</p>
+        <h2 class="section__title">How we got here</h2>
+      </header>
+      <div class="timeline" id="timeline"><!-- injected --></div>
+    </section>
+
+    <!-- ===================== MEMORY GALLERY ===================== -->
+    <section id="gallery" class="gallery section">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">memories</p>
+        <h2 class="section__title">Little moments, kept forever</h2>
+        <p class="section__desc">Tap any photo to look closer.</p>
+      </header>
+      <div class="gallery__grid" id="galleryGrid"><!-- injected --></div>
+    </section>
+
+    <!-- ===================== LOVE NOTES ===================== -->
+    <section id="notes" class="notes section">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">love notes</p>
+        <h2 class="section__title">A few things I keep meaning to say</h2>
+        <p class="section__desc">Tap a card to flip and read.</p>
+      </header>
+      <div class="notes__grid" id="notesGrid"><!-- injected --></div>
+    </section>
+
+    <!-- ===================== REASONS (BALLOONS) ===================== -->
+    <section id="reasons" class="reasons section">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow">reasons</p>
+        <h2 class="section__title">Pop them all, Madam Ji 🎈</h2>
+        <p class="section__desc">
+          <span class="counter-badge"><span id="reasonsCount">0</span> / <span id="reasonsTotal">0</span> popped</span>
+        </p>
+      </header>
+      <div class="reasons__stage" id="reasonsStage">
+        <div class="reasons__balloons" id="balloons"><!-- injected --></div>
+      </div>
+      <ul class="reasons__list" id="reasonsList" aria-live="polite"><!-- injected --></ul>
+    </section>
+
+    <!-- ===================== LOVE METER ===================== -->
+    <section id="lovemeter" class="lovemeter section">
+      <div data-reveal class="lovemeter__inner">
+        <p class="eyebrow">just for you</p>
+        <h2 class="section__title" id="loveMeterPrompt">Do you know how much you are loved?</h2>
+        <p class="section__desc" id="loveMeterInstruction">Press & hold the heart, Madam Ji!</p>
+
+        <button id="loveBtn" class="lovemeter__btn" aria-label="Press and hold heart">
+          <svg class="lovemeter__ring" viewBox="0 0 120 120">
+            <circle class="lovemeter__ring-bg" cx="60" cy="60" r="54" />
+            <circle class="lovemeter__ring-fg" id="ringFg" cx="60" cy="60" r="54" />
+          </svg>
+          <span class="lovemeter__heart">❤</span>
+        </button>
+
+        <div class="lovemeter__result" id="loveMeterResult">
+          <p class="lovemeter__count" id="loveMeterCount">0%</p>
+          <p class="lovemeter__line" id="loveMeterLine1"></p>
+          <p class="lovemeter__line lovemeter__line--script" id="loveMeterLine2"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FINALE ===================== -->
+    <section id="finale" class="finale section">
+      <div class="finale__inner" data-reveal>
+        <div class="finale__crown">👑</div>
+        <p class="finale__lead" id="finaleLead">And finally, Madam Ji…</p>
+        <p class="finale__message" id="finaleMessage"></p>
+        <h2 class="finale__title" id="finaleTitle">Happy Birthday, Shammi <span class="finale__heart">❤</span></h2>
+        <p class="finale__signature" id="finaleSignature">— always yours</p>
+
+        <button id="replayBtn" class="btn btn--secondary finale__replay-btn">
+          <span>Replay the Surprise 🔁</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== LIGHTBOX MODAL ===================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="lightbox__close" id="lightboxClose" aria-label="Close">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Previous photo">‹</button>
+    <div class="lightbox__frame">
+      <div class="lightbox__img" id="lightboxImg"></div>
+      <p class="lightbox__caption" id="lightboxCaption"></p>
+    </div>
+    <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Next photo">›</button>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

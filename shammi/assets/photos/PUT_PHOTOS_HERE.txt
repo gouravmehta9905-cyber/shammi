@@ -1,0 +1,1 @@
+Put her photos here (e.g. goa-trip.jpg), then reference them in js/data.js
