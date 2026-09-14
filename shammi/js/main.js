@@ -438,6 +438,9 @@
       blowBtn.style.display = "none";
       cutBtn.style.display = "inline-flex";
       wishCard.style.display = "block";
+      setTimeout(() => {
+        wishCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 150);
     }, 400);
   }
   blowBtn.addEventListener("click", blowOutCandles);
