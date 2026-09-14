@@ -15,9 +15,9 @@ const SITE_DATA = {
 
   // ---- Landing screen -----------------------------------------------------
   landing: {
-    badge: "✦ A Special Surprise ✦",
+    badge: "✦ A Special Surprise for my Cutei😘 ✦",
     greeting: "Hey, Madam Ji ✨",
-    subtitle: "I made you a little magical corner of the internet for your birthday.",
+    subtitle: "I made you a little magical corner of my heart for your birthday.",
     buttonLabel: "Open Your Surprise 🎁",
   },
 
@@ -42,12 +42,67 @@ const SITE_DATA = {
     candlesCount: 5,
   },
 
+  // ---- Virtual Flower Bouquet for Cutei -----------------------------------
+  bouquet: {
+    badge: "hand-picked with love",
+    title: "A Bouquet for My Cutei 💐",
+    subtitle: "Real flowers wilt, but this bouquet is made of love and blooms forever. Tap each flower to reveal its secret message!",
+    ribbonTag: "For My Cutei (Madam Ji) 💖",
+    ribbonSub: "Hand-picked with infinite love by Gaurav",
+    flowers: [
+      {
+        id: "rose",
+        name: "Crimson Velvet Rose",
+        emoji: "🌹",
+        color: "#ff3366",
+        meaning: "Symbolizing my deep, unconditional love for you that only grows stronger and deeper every single day.",
+      },
+      {
+        id: "peony",
+        name: "Blushing Pink Peony",
+        emoji: "🌸",
+        color: "#ff758c",
+        meaning: "For your sweet grace, your gentle care, and that radiant smile that lights up my whole world.",
+      },
+      {
+        id: "sunflower",
+        name: "Golden Sunshine Blossom",
+        emoji: "🌻",
+        color: "#f9ca24",
+        meaning: "Because you are my personal sunshine. No matter how cloudy the day is, you make everything warm and bright.",
+      },
+      {
+        id: "tulip",
+        name: "Romantic Pink Tulip",
+        emoji: "🌷",
+        color: "#fd79a8",
+        meaning: "A promise of sweetness, playful laughs, warm hugs, and all the special moments still waiting for us.",
+      },
+      {
+        id: "orchid",
+        name: "Royal Purple Orchid",
+        emoji: "🪻",
+        color: "#a29bfe",
+        meaning: "Rare, exquisite, and timeless. There is no one in this entire universe as uniquely wonderful as you.",
+      },
+      {
+        id: "daisy",
+        name: "Starlight Daisy & Lily",
+        emoji: "🌼",
+        color: "#ffeaa7",
+        meaning: "For the peace, comfort, and pure happiness you bring into my life just by being yourself.",
+      },
+    ],
+    bloomAllBtn: "Bloom Entire Bouquet 🌸✨",
+    showerBtn: "Rain Flower Petals 🌧️🌹",
+  },
+
   // ---- Special Birthday Letter (Wax Seal Envelope) ------------------------
   letter: {
     badge: "sealed with love",
     title: "A Letter from My Heart",
     subtitle: "Tap the wax seal to open your birthday letter 💌",
-    salutation: "My Dearest Madam Ji,",
+    salutation: "My Hottest Madam Ji,",
     paragraphs: [
       "On this beautiful day, the world was blessed with the kindest, sweetest, and most special person I know.",
       "Thank you for being my constant smile, my peace, and the brightest spark in every single day. The way your eyes light up when you laugh is my favorite sight in the universe.",
@@ -63,7 +118,7 @@ const SITE_DATA = {
       tag: "The Beginning",
       icon: "💕",
       date: "The Day We Met",
-      text: "The moment you walked into my life, everything felt brighter. I knew right away that you were someone truly unforgettable.",
+      text: "8-BALL-POOL: The moment you walked into my life, everything felt brighter. I knew right away that you were someone truly unforgettable.",
     },
     {
       tag: "The Moments",
@@ -133,7 +188,7 @@ const SITE_DATA = {
     },
     {
       title: "For Madam Ji,",
-      message: "Rule #1 for today: You get unlimited treats, zero stress, and all the royal treatment you deserve!",
+      message: "Rule #1 for today: You get unlimited love by sir ji #gaurav😁, zero stress, and all the royal treatment you deserve",
     },
     {
       title: "Just because,",
@@ -153,9 +208,9 @@ const SITE_DATA = {
 
   // ---- Cute interactive moment --------------------------------------------
   loveMeter: {
-    prompt: "Do you know how much you are loved?",
-    instruction: "Press & hold the heart, Madam Ji!",
-    resultLine1: "It broke the meter and kept counting...",
+    prompt: "Do you know how much you are loved, My Cutei😘?",
+    instruction: "Press & hold the heart, My Cutei😘",
+    resultLine1: "ohhh!!! You broke the meter and kept counting...",
     resultLine2: "Infinitely. Beyond all the stars in the sky. ✨",
   },
 
@@ -163,7 +218,7 @@ const SITE_DATA = {
   finale: {
     lead: "And finally, Madam Ji…",
     message:
-      "Happy Birthday, Shammi! May your day be filled with endless joy, sweet surprises, warm hugs, and all the love in the universe. Thank you for being my favorite person in the entire world.",
+      "Happy Birthday, My Cutei😘! May your day be filled with endless joy, sweet surprises, warm hugs, and all the love in the universe. Thank you for being my favorite person in the entire world.",
     signature: "— always yours, with all my love ❤️",
   },
 

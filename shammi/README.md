@@ -1,8 +1,6 @@
 # For Shammi 💌
 
-A little interactive website — landing surprise, your story, a memory
-gallery, love notes, a "pop the reasons" balloon game, a press-and-hold
-love meter, and a final message reveal.
+A luxurious, romantic birthday website — landing surprise, interactive birthday cake & blowable candles, everlasting handpicked flower bouquet, wax-sealed love letter, your story timeline, polaroid memory gallery, love notes, a "pop the reasons" floating balloon game, a press-and-hold love meter, and an emotional finale.
 
 No build tools needed. It's plain HTML/CSS/JS, so it just works when you
 open it or host it anywhere.

@@ -230,6 +230,28 @@
     document.getElementById("cakeTopperText").textContent = `Happy Birthday ${D.name} ✨`;
   }
 
+  if (D.bouquet) {
+    if (D.bouquet.badge) setText("[data-bouquet-badge]", D.bouquet.badge);
+    if (D.bouquet.title) setText("[data-bouquet-title]", D.bouquet.title);
+    if (D.bouquet.subtitle) setText("[data-bouquet-subtitle]", D.bouquet.subtitle);
+    if (D.bouquet.ribbonTag) {
+      const tagTitle = document.getElementById("tagTitleText");
+      if (tagTitle) tagTitle.textContent = D.bouquet.ribbonTag;
+    }
+    if (D.bouquet.ribbonSub) {
+      const tagSub = document.getElementById("tagSubText");
+      if (tagSub) tagSub.textContent = D.bouquet.ribbonSub;
+    }
+    if (D.bouquet.bloomAllBtn) {
+      const bloomBtnText = document.getElementById("bloomAllText");
+      if (bloomBtnText) bloomBtnText.textContent = D.bouquet.bloomAllBtn;
+    }
+    if (D.bouquet.showerBtn) {
+      const showerBtnText = document.getElementById("showerBtnText");
+      if (showerBtnText) showerBtnText.textContent = D.bouquet.showerBtn;
+    }
+  }
+
   if (D.letter) {
     if (D.letter.badge) setText("[data-letter-badge]", D.letter.badge);
     if (D.letter.title) setText("[data-letter-title]", D.letter.title);
@@ -283,12 +305,13 @@
   }, { once: true });
 
   /* =========================================================================
-     STARFIELD / AMBIENT BACKGROUND SKY
+     STARFIELD & AMBIENT FLOATING FLOWER PETALS SKY
      ========================================================================= */
   const skyCanvas = document.getElementById("sky");
   const skyCtx = skyCanvas.getContext("2d");
   let stars = [];
   let hearts = [];
+  let petals = [];
 
   function resizeSky() {
     skyCanvas.width = window.innerWidth;
@@ -314,6 +337,21 @@
         speed: Math.random() * 0.35 + 0.15,
         drift: Math.random() * 0.6 - 0.3,
         opacity: Math.random() * 0.2 + 0.08,
+      }));
+
+      const petalList = ["🌸", "🌹", "🌷", "🌺", "✨", "🍃"];
+      petals = Array.from({ length: 14 }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        size: Math.random() * 8 + 14,
+        speedY: Math.random() * 0.6 + 0.35,
+        swayPhase: Math.random() * Math.PI * 2,
+        swaySpeed: Math.random() * 0.02 + 0.008,
+        swayAmp: Math.random() * 0.8 + 0.3,
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 1.4,
+        opacity: Math.random() * 0.35 + 0.25,
+        emoji: petalList[Math.floor(Math.random() * petalList.length)],
       }));
     }
   }
@@ -343,6 +381,26 @@
         skyCtx.globalAlpha = h.opacity;
         skyCtx.font = `${h.size}px sans-serif`;
         skyCtx.fillText("💖", h.x, h.y);
+        skyCtx.restore();
+      });
+
+      petals.forEach((p) => {
+        p.y += p.speedY;
+        p.swayPhase += p.swaySpeed;
+        p.x += Math.sin(p.swayPhase) * p.swayAmp;
+        p.rotation += p.rotSpeed;
+        if (p.y > skyCanvas.height + 30) {
+          p.y = -30;
+          p.x = Math.random() * window.innerWidth;
+        }
+        skyCtx.save();
+        skyCtx.globalAlpha = p.opacity;
+        skyCtx.translate(p.x, p.y);
+        skyCtx.rotate((p.rotation * Math.PI) / 180);
+        skyCtx.font = `${p.size}px sans-serif`;
+        skyCtx.textAlign = "center";
+        skyCtx.textBaseline = "middle";
+        skyCtx.fillText(p.emoji, 0, 0);
         skyCtx.restore();
       });
     }
@@ -454,6 +512,138 @@
     cutBtn.style.opacity = "0.7";
     cutBtn.innerHTML = "<span>🍰 Enjoy Your Cake!</span>";
   });
+
+  /* =========================================================================
+     VIRTUAL FLOWER BOUQUET FOR CUTEI
+     ========================================================================= */
+  const bouquetFlowers = document.getElementById("bouquetFlowers");
+  const flowerCard = document.getElementById("flowerCard");
+  const flowerCardIcon = document.getElementById("flowerCardIcon");
+  const flowerCardBadge = document.getElementById("flowerCardBadge");
+  const flowerCardText = document.getElementById("flowerCardText");
+  const bouquetCounter = document.getElementById("bouquetCounter");
+  const bloomAllBtn = document.getElementById("bloomAllBtn");
+  const showerPetalsBtn = document.getElementById("showerPetalsBtn");
+
+  const flowersData = (D.bouquet && D.bouquet.flowers) || [];
+  const totalFlowers = flowersData.length;
+  let bloomedFlowerIds = new Set();
+
+  // Natural fan arrangement geometry for bouquet flowers
+  const offsets = [
+    { x: -95, y: -4, rot: -22, tilt: -26, z: 2 },
+    { x: -56, y: 14, rot: -12, tilt: -16, z: 3 },
+    { x: -18, y: 24, rot: -4,  tilt: -6,  z: 5 },
+    { x: 18,  y: 22, rot: 5,   tilt: 7,   z: 5 },
+    { x: 56,  y: 12, rot: 13,  tilt: 17,  z: 3 },
+    { x: 95,  y: -6, rot: 23,  tilt: 27,  z: 2 }
+  ];
+
+  if (bouquetFlowers && flowersData.length > 0) {
+    flowersData.forEach((f, idx) => {
+      const layout = offsets[idx % offsets.length];
+      const flowerEl = document.createElement("div");
+      flowerEl.className = "flower-item";
+      flowerEl.id = `flower-${f.id}`;
+      flowerEl.style.left = `calc(50% + ${layout.x}px - 30px)`;
+      flowerEl.style.bottom = `${10 + layout.y}px`;
+      flowerEl.style.transform = `rotate(${layout.rot}deg)`;
+      flowerEl.style.zIndex = layout.z;
+      flowerEl.style.setProperty("--hover-tilt", `${layout.tilt}deg`);
+      flowerEl.style.setProperty("--f-glow", `${f.color}aa`);
+
+      flowerEl.innerHTML = `
+        <div class="flower-head">
+          <div class="flower-head__halo"></div>
+          <span class="flower-emoji">${f.emoji}</span>
+        </div>
+        <div class="flower-stem">
+          <span class="flower-leaf flower-leaf--left">🍃</span>
+          <span class="flower-leaf flower-leaf--right">🌿</span>
+        </div>
+      `;
+
+      flowerEl.addEventListener("click", () => {
+        revealFlower(f, flowerEl);
+      });
+
+      bouquetFlowers.appendChild(flowerEl);
+    });
+  }
+
+  function revealFlower(f, el) {
+    initAudioContext();
+    playChime();
+
+    const rect = el.getBoundingClientRect();
+    fireConfetti(rect.left / window.innerWidth, rect.top / window.innerHeight, 20);
+
+    el.classList.add("is-bloomed");
+    bloomedFlowerIds.add(f.id);
+
+    // Update Counter
+    if (bouquetCounter) {
+      if (bloomedFlowerIds.size === totalFlowers) {
+        bouquetCounter.innerHTML = `All ${totalFlowers} flowers bloomed for Cutei! 💖`;
+      } else {
+        bouquetCounter.innerHTML = `🌸 ${bloomedFlowerIds.size} / ${totalFlowers} flowers bloomed`;
+      }
+    }
+
+    // Display Detail Card
+    if (flowerCard) {
+      flowerCard.style.display = "flex";
+      flowerCardIcon.textContent = f.emoji;
+      flowerCardBadge.textContent = f.name;
+      flowerCardBadge.style.color = f.color;
+      flowerCardText.textContent = f.meaning;
+    }
+  }
+
+  // Bloom entire bouquet button
+  if (bloomAllBtn) {
+    bloomAllBtn.addEventListener("click", () => {
+      initAudioContext();
+      playChime();
+      let delay = 0;
+
+      flowersData.forEach((f, i) => {
+        setTimeout(() => {
+          const el = document.getElementById(`flower-${f.id}`);
+          if (el) {
+            el.classList.add("is-bloomed");
+            bloomedFlowerIds.add(f.id);
+            const rect = el.getBoundingClientRect();
+            fireConfetti(rect.left / window.innerWidth, rect.top / window.innerHeight, 16);
+          }
+          if (i === flowersData.length - 1) {
+            playFanfare();
+            fireConfetti(0.5, 0.4, 90);
+            if (bouquetCounter) {
+              bouquetCounter.innerHTML = `All flowers blooming with love for Cutei! 💐💖`;
+            }
+            if (flowerCard) {
+              flowerCard.style.display = "flex";
+              flowerCardIcon.textContent = "💐";
+              flowerCardBadge.textContent = "Everlasting Bouquet";
+              flowerCardBadge.style.color = "var(--accent-gold)";
+              flowerCardText.textContent = "Every single bloom represents a piece of my heart, blooming with love for my favorite person.";
+            }
+          }
+        }, delay);
+        delay += 160;
+      });
+    });
+  }
+
+  // Rain Petals button
+  if (showerPetalsBtn) {
+    showerPetalsBtn.addEventListener("click", () => {
+      initAudioContext();
+      playChime();
+      firePetalShower(55);
+    });
+  }
 
   /* =========================================================================
      WAX-SEALED BIRTHDAY LETTER (INTERACTIVE ENVELOPE)
@@ -806,5 +996,64 @@
       musicToggle.querySelector(".musicplayer__icon").textContent = "♪";
     }
   });
+
+  /* =========================================================================
+     PETAL SHOWER & CURSOR / TOUCH MAGIC FLOWER TRAIL
+     ========================================================================= */
+  function firePetalShower(count = 45) {
+    if (prefersReducedMotion) return;
+    const petalEmojis = ["🌸", "🌹", "🌷", "🌻", "🌺", "🪻", "🌼", "✨"];
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const el = document.createElement("div");
+        el.className = "sparkle-trail";
+        el.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+        el.style.left = `${Math.random() * 100}vw`;
+        el.style.top = "-20px";
+        el.style.fontSize = `${Math.random() * 14 + 18}px`;
+        el.style.transition = `transform ${Math.random() * 2 + 2.5}s cubic-bezier(0.2, 0.8, 0.4, 1), opacity 3s linear`;
+        document.body.appendChild(el);
+
+        requestAnimationFrame(() => {
+          el.style.transform = `translate(${Math.random() * 120 - 60}px, ${window.innerHeight + 50}px) rotate(${Math.random() * 720 - 360}deg)`;
+          el.style.opacity = "0";
+        });
+
+        setTimeout(() => el.remove(), 3800);
+      }, i * 35);
+    }
+  }
+
+  let lastTrailTime = 0;
+  function createSparkleTrail(x, y) {
+    const now = performance.now();
+    if (now - lastTrailTime < 55) return;
+    lastTrailTime = now;
+
+    const trail = document.createElement("div");
+    trail.className = "sparkle-trail";
+    const trailItems = ["🌸", "💖", "✨", "🌹", "🌷", "💫"];
+    trail.textContent = trailItems[Math.floor(Math.random() * trailItems.length)];
+    trail.style.left = `${x}px`;
+    trail.style.top = `${y}px`;
+    trail.style.fontSize = `${Math.random() * 8 + 14}px`;
+    document.body.appendChild(trail);
+
+    const driftX = (Math.random() - 0.5) * 45;
+    const driftY = -(Math.random() * 35 + 25);
+    const rot = (Math.random() - 0.5) * 60;
+
+    requestAnimationFrame(() => {
+      trail.style.transform = `translate(calc(-50% + ${driftX}px), calc(-50% + ${driftY}px)) scale(0.6) rotate(${rot}deg)`;
+      trail.style.opacity = "0";
+    });
+
+    setTimeout(() => trail.remove(), 750);
+  }
+
+  window.addEventListener("pointermove", (e) => {
+    if (prefersReducedMotion) return;
+    createSparkleTrail(e.clientX, e.clientY);
+  }, { passive: true });
 
 })();

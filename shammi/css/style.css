@@ -916,6 +916,480 @@ main {
 }
 
 /* =========================================================================
+   VIRTUAL FLOWER BOUQUET SECTION
+   ========================================================================= */
+.bouquet-section {
+  padding-top: clamp(70px, 12vh, 140px);
+}
+
+.bouquet-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(249, 202, 36, 0.35);
+  border-radius: 999px;
+  padding: 6px 18px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--accent-gold-light);
+  margin-top: 14px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.bouquet-status-icon {
+  font-size: 1rem;
+  animation: pulseFlower 2s ease-in-out infinite;
+}
+
+@keyframes pulseFlower {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25) rotate(10deg); }
+}
+
+.bouquet-stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Ambient Sparkles around Bouquet */
+.bouquet-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bouquet-sparkles .f-sparkle {
+  position: absolute;
+  font-size: 1.3rem;
+  animation: floatFlowerSparkle 3.5s ease-in-out infinite alternate;
+  filter: drop-shadow(0 2px 8px rgba(232, 67, 147, 0.4));
+}
+
+.bouquet-sparkles .fs1 { top: 5%; left: 8%; animation-delay: 0s; }
+.bouquet-sparkles .fs2 { top: 25%; right: 10%; animation-delay: 0.7s; }
+.bouquet-sparkles .fs3 { bottom: 30%; left: 6%; animation-delay: 1.4s; }
+.bouquet-sparkles .fs4 { top: 2%; right: 22%; animation-delay: 2.1s; }
+.bouquet-sparkles .fs5 { bottom: 40%; right: 8%; animation-delay: 2.8s; }
+
+@keyframes floatFlowerSparkle {
+  0% { transform: translateY(0) scale(0.85) rotate(-5deg); opacity: 0.4; }
+  100% { transform: translateY(-12px) scale(1.15) rotate(10deg); opacity: 1; }
+}
+
+/* The Bouquet Artwork Container */
+.bouquet-container {
+  position: relative;
+  width: min(380px, 92vw);
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 28px;
+}
+
+/* Blooming Flowers Display Container */
+.bouquet-flowers {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 240px;
+  z-index: 2;
+  pointer-events: auto;
+}
+
+/* Individual Flower in Bouquet */
+.flower-item {
+  position: absolute;
+  bottom: 10px;
+  width: 60px;
+  height: 210px;
+  transform-origin: bottom center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: transform 0.4s var(--ease-bounce), filter 0.3s ease;
+  user-select: none;
+}
+
+.flower-item:hover {
+  transform: scale(1.18) translateY(-8px) rotate(var(--hover-tilt, 0deg)) !important;
+  filter: brightness(1.25) drop-shadow(0 0 18px var(--f-glow, rgba(232, 67, 147, 0.7)));
+  z-index: 10 !important;
+}
+
+.flower-head {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
+  transition: transform 0.3s var(--ease-bounce);
+}
+
+.flower-head__halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--f-glow, rgba(255, 117, 140, 0.4)) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.flower-item:hover .flower-head__halo,
+.flower-item.is-bloomed .flower-head__halo {
+  opacity: 1;
+  transform: scale(1.25);
+}
+
+.flower-stem {
+  width: 4px;
+  height: 155px;
+  background: linear-gradient(to bottom, #2ecc71, #27ae60 70%, #1e824c);
+  border-radius: 3px;
+  position: relative;
+  box-shadow: inset 1px 0 2px rgba(255, 255, 255, 0.3), 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.flower-leaf {
+  position: absolute;
+  font-size: 1rem;
+  color: #2ecc71;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+}
+
+.flower-leaf--left {
+  left: -14px;
+  top: 40%;
+  transform: rotate(-35deg);
+}
+
+.flower-leaf--right {
+  right: -14px;
+  top: 60%;
+  transform: scaleX(-1) rotate(-35deg);
+}
+
+/* Bloomed State */
+.flower-item.is-bloomed {
+  filter: drop-shadow(0 0 14px var(--f-glow, rgba(232, 67, 147, 0.6)));
+}
+
+.flower-item.is-bloomed .flower-head {
+  animation: flowerGentlySway 3s ease-in-out infinite alternate;
+}
+
+@keyframes flowerGentlySway {
+  0% { transform: scale(1) rotate(-3deg); }
+  100% { transform: scale(1.08) rotate(3deg); }
+}
+
+/* Bouquet Wrapping Cone & Origami Paper */
+.bouquet-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 190px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.bouquet-paper-back {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 170px;
+  background: linear-gradient(145deg, rgba(254, 202, 87, 0.25) 0%, rgba(255, 159, 243, 0.25) 100%);
+  border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+  clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 25% 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+.bouquet-leaves {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 1.5rem;
+  z-index: 2;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.b-leaf-1 { transform: rotate(-30deg) translateY(-8px); }
+.b-leaf-2 { transform: rotate(-10deg) translateY(-14px); }
+.b-leaf-3 { transform: rotate(10deg) translateY(-14px); }
+.b-leaf-4 { transform: rotate(30deg) translateY(-8px); }
+
+.bouquet-paper-front {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 160px;
+  z-index: 3;
+}
+
+.bouquet-paper-fold {
+  position: absolute;
+  bottom: 0;
+  height: 100%;
+  width: 130px;
+  background: linear-gradient(135deg, rgba(40, 20, 55, 0.88) 0%, rgba(20, 10, 32, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.fold-left {
+  left: 0;
+  clip-path: polygon(0% 15%, 100% 0%, 65% 100%, 0% 100%);
+  border-top: 2px solid rgba(249, 202, 36, 0.4);
+  transform: rotate(-6deg);
+  transform-origin: bottom left;
+}
+
+.fold-right {
+  right: 0;
+  clip-path: polygon(0% 0%, 100% 15%, 100% 100%, 35% 100%);
+  border-top: 2px solid rgba(232, 67, 147, 0.4);
+  transform: rotate(6deg);
+  transform-origin: bottom right;
+}
+
+/* Bouquet Ribbon Bow & Romantic Tag */
+.bouquet-ribbon {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 6;
+  pointer-events: auto;
+}
+
+.ribbon-knot {
+  font-size: 2.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 10px rgba(232, 67, 147, 0.5));
+  animation: bowGiggle 4s ease-in-out infinite;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.ribbon-knot:hover {
+  transform: scale(1.2) rotate(6deg);
+}
+
+@keyframes bowGiggle {
+  0%, 100% { transform: rotate(0deg); }
+  30% { transform: rotate(-5deg); }
+  70% { transform: rotate(5deg); }
+}
+
+.ribbon-tag {
+  background: linear-gradient(135deg, #fffdf8 0%, #fff2f5 100%);
+  color: #2c1a2e;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #f9ca24;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-top: -6px;
+  transform: rotate(-3deg);
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+.ribbon-tag:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.ribbon-tag .tag-title {
+  font-family: var(--font-script);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #c2407e;
+  line-height: 1.2;
+}
+
+.ribbon-tag .tag-sub {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #5a4d6e;
+  letter-spacing: 0.4px;
+  margin-top: 1px;
+}
+
+/* Active Flower Detail Card */
+.flower-card {
+  width: min(520px, 92vw);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  margin-bottom: 24px;
+  animation: slideUpCard 0.4s var(--ease);
+}
+
+@keyframes slideUpCard {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.flower-card__icon {
+  font-size: 3rem;
+  line-height: 1;
+  flex-shrink: 0;
+  filter: drop-shadow(0 4px 12px rgba(232, 67, 147, 0.5));
+  animation: heartPop 0.4s var(--ease-bounce);
+}
+
+.flower-card__content {
+  flex: 1;
+}
+
+.flower-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.flower-card__badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--accent-gold);
+}
+
+.flower-card__sparkle {
+  font-size: 0.95rem;
+}
+
+.flower-card__text {
+  font-size: 1.05rem;
+  font-family: var(--font-script);
+  color: var(--cream);
+  line-height: 1.35;
+}
+
+/* Bouquet Action Buttons */
+.bouquet-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn--bouquet {
+  background: linear-gradient(135deg, #e84393 0%, #fd79a8 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 24px rgba(232, 67, 147, 0.4);
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s ease;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.btn--bouquet:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(232, 67, 147, 0.6);
+}
+
+.btn--bouquet.btn--secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--cream);
+  border: 1px solid rgba(249, 202, 36, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.btn--bouquet.btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--accent-gold);
+  box-shadow: 0 12px 30px rgba(249, 202, 36, 0.4);
+}
+
+/* Floral Garland in Hero */
+.hero__floral-garland {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  color: var(--accent-gold);
+  margin: 6px 0 18px;
+  opacity: 0.9;
+  filter: drop-shadow(0 2px 6px rgba(249, 202, 36, 0.4));
+  user-select: none;
+}
+
+/* Pressed Flower on Letter Sheet */
+.letter-flower-accent {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 2rem;
+  opacity: 0.8;
+  transform: rotate(25deg);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  pointer-events: none;
+}
+
+/* =========================================================================
    WAX-SEALED BIRTHDAY LETTER SECTION
    ========================================================================= */
 .letter-section {

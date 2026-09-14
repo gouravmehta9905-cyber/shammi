@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,600&family=Caveat:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/style.css?v=2.2" />
+  <link rel="stylesheet" href="css/style.css?v=2.3" />
 </head>
 <body>
 
@@ -46,6 +46,7 @@
   <nav class="dotnav" id="dotnav" aria-label="Section navigation">
     <button class="dotnav__dot" data-target="hero" aria-label="Hero section"></button>
     <button class="dotnav__dot" data-target="cakeSection" aria-label="Birthday cake"></button>
+    <button class="dotnav__dot" data-target="bouquetSection" aria-label="Flower bouquet"></button>
     <button class="dotnav__dot" data-target="letterSection" aria-label="Birthday letter"></button>
     <button class="dotnav__dot" data-target="story" aria-label="Our story"></button>
     <button class="dotnav__dot" data-target="gallery" aria-label="Memory gallery"></button>
@@ -60,10 +61,10 @@
     <div class="landing__backdrop"></div>
     <div class="landing__stars" aria-hidden="true"></div>
     <div class="landing__card">
-      <div class="landing__badge" data-landing-badge>✦ A Special Surprise ✦</div>
+      <div class="landing__badge" data-landing-badge>✦ A Special Surprise for my Cutei😘 ✦</div>
       <div class="landing__gift-icon">🎁</div>
       <h1 class="landing__title" data-landing-title>Hey, Madam Ji ✨</h1>
-      <p class="landing__subtitle" data-landing-subtitle>I made you a little magical corner of the internet for your birthday.</p>
+      <p class="landing__subtitle" data-landing-subtitle>I made you a little magical corner of my heart for your birthday.</p>
       
       <button id="openSurprise" class="btn btn--primary landing__btn">
         <span data-landing-btn>Open Your Surprise 🎁</span>
@@ -85,6 +86,9 @@
           <span data-hero-line1 class="hero__line1">Happy Birthday, Shammi!</span>
           <span class="hero__title-script" data-hero-line2>This celebration is all for you.</span>
         </h2>
+        <div class="hero__floral-garland" aria-hidden="true">
+          <span>🌸</span><span>❦</span><span>🌹</span><span>❦</span><span>🌸</span>
+        </div>
         <p class="hero__subtitle" data-hero-subtitle>
           Every section holds a little piece of love and magic I wanted you to see. Take your time, Madam Ji — walk through your special day.
         </p>
@@ -175,6 +179,90 @@
       </div>
     </section>
 
+    <!-- ===================== VIRTUAL FLOWER BOUQUET ===================== -->
+    <section id="bouquetSection" class="bouquet-section section">
+      <header class="section__head" data-reveal>
+        <p class="eyebrow" data-bouquet-badge>hand-picked with love</p>
+        <h2 class="section__title" data-bouquet-title>A Bouquet for My Cutei 💐</h2>
+        <p class="section__desc" data-bouquet-subtitle>
+          Real flowers wilt, but this bouquet is made of love and blooms forever. Tap each flower to reveal its secret message!
+        </p>
+        <div class="bouquet-status-badge">
+          <span class="bouquet-status-icon">🌸</span>
+          <span id="bouquetCounter">Tap any flower to bloom</span>
+        </div>
+      </header>
+
+      <div class="bouquet-stage" data-reveal>
+        <!-- Ambient Floral Sparkles -->
+        <div class="bouquet-sparkles" aria-hidden="true">
+          <span class="f-sparkle fs1">🌸</span>
+          <span class="f-sparkle fs2">✨</span>
+          <span class="f-sparkle fs3">🌹</span>
+          <span class="f-sparkle fs4">💫</span>
+          <span class="f-sparkle fs5">🌷</span>
+        </div>
+
+        <!-- The Bouquet Artwork -->
+        <div class="bouquet-container" id="bouquetContainer">
+          <!-- Blooming Flowers Display -->
+          <div class="bouquet-flowers" id="bouquetFlowers">
+            <!-- Dynamically injected flowers by JS -->
+          </div>
+
+          <!-- Luxury Wrapping Paper & Ribbon -->
+          <div class="bouquet-wrap">
+            <div class="bouquet-paper-back"></div>
+            <div class="bouquet-leaves">
+              <span class="b-leaf b-leaf-1">🌿</span>
+              <span class="b-leaf b-leaf-2">🍃</span>
+              <span class="b-leaf b-leaf-3">🌿</span>
+              <span class="b-leaf b-leaf-4">🍃</span>
+            </div>
+            <div class="bouquet-paper-front">
+              <div class="bouquet-paper-fold fold-left"></div>
+              <div class="bouquet-paper-fold fold-right"></div>
+            </div>
+            
+            <!-- Satin Ribbon Bow & Romantic Tag -->
+            <div class="bouquet-ribbon">
+              <div class="ribbon-knot">🎀</div>
+              <div class="ribbon-tag" id="bouquetRibbonTag">
+                <span class="tag-title" id="tagTitleText">For My Cutei 💖</span>
+                <span class="tag-sub" id="tagSubText">Handcrafted by Gaurav</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Flower Card / Note Detail -->
+        <div class="flower-card" id="flowerCard" style="display: none;">
+          <div class="flower-card__icon" id="flowerCardIcon">🌹</div>
+          <div class="flower-card__content">
+            <div class="flower-card__header">
+              <span class="flower-card__badge" id="flowerCardBadge">Crimson Velvet Rose</span>
+              <span class="flower-card__sparkle">✨</span>
+            </div>
+            <p class="flower-card__text" id="flowerCardText">
+              Symbolizing my deep, unconditional love for you that only grows stronger and deeper every single day.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bouquet Actions -->
+        <div class="bouquet-actions">
+          <button id="bloomAllBtn" class="btn btn--bouquet">
+            <span class="btn__icon">🌸</span>
+            <span id="bloomAllText">Bloom Entire Bouquet ✨</span>
+          </button>
+          <button id="showerPetalsBtn" class="btn btn--bouquet btn--secondary">
+            <span class="btn__icon">🌧️</span>
+            <span id="showerBtnText">Rain Flower Petals 🌹</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== WAX-SEALED BIRTHDAY LETTER ===================== -->
     <section id="letterSection" class="letter-section section">
       <header class="section__head" data-reveal>
@@ -193,7 +281,8 @@
             <div class="letter-sheet" id="letterSheet">
               <div class="letter-sheet__inner">
                 <div class="letter-stamp">✦ Shammi ✦</div>
-                <h3 class="letter-salutation" id="letterSalutation">My Dearest Madam Ji,</h3>
+                <div class="letter-flower-accent" aria-hidden="true">🥀</div>
+                <h3 class="letter-salutation" id="letterSalutation">My Hottest Madam Ji,</h3>
                 <div class="letter-body" id="letterBody">
                   <!-- Injected from data.js -->
                 </div>
@@ -267,8 +356,8 @@
     <section id="lovemeter" class="lovemeter section">
       <div data-reveal class="lovemeter__inner">
         <p class="eyebrow">just for you</p>
-        <h2 class="section__title" id="loveMeterPrompt">Do you know how much you are loved?</h2>
-        <p class="section__desc" id="loveMeterInstruction">Press & hold the heart, Madam Ji!</p>
+        <h2 class="section__title" id="loveMeterPrompt">Do you know how much you are loved, My Cutei😘?</h2>
+        <p class="section__desc" id="loveMeterInstruction">Press & hold the heart, My Cutei😘</p>
 
         <button id="loveBtn" class="lovemeter__btn" aria-label="Press and hold heart">
           <svg class="lovemeter__ring" viewBox="0 0 120 120">
@@ -314,7 +403,7 @@
     <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Next photo">›</button>
   </div>
 
-  <script src="js/data.js?v=2.2"></script>
-  <script src="js/main.js?v=2.2"></script>
+  <script src="js/data.js?v=2.3"></script>
+  <script src="js/main.js?v=2.3"></script>
 </body>
 </html>
